@@ -81,7 +81,7 @@ int main() {
 
 struct Node {
     int data;
-    GC::Ptr<Node> next;
+    GC::VSharedPtr<Node> next;
 
     explicit Node(int d) : data(d) {
         std::cout << "Node(" << data << ") created\n";
