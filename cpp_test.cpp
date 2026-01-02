@@ -25,10 +25,6 @@ int main() {
         a->next = b;
         b->next = a;*/
 
-
-        GC::Ptr<Node> n(new Node);
-        GC::VSharedPtr<Node> n(new Node);
-
         
         /*auto x = GC::VMakeShared<Node>();
         auto y = GC::VMakeShared<Node>();

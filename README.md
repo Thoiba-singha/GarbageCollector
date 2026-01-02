@@ -95,8 +95,8 @@ struct Node {
 int main() {
     //  Basic cyclic dependency test
     {
-        GC::Ptr<Node> node1(new Node(40));
-        GC::Ptr<Node> node2(new Node(50));
+        GC::VSharedPtr<Node> node1(new Node(40));
+        GC::VSharedPtr<Node> node2(new Node(50));
         node1->next.Ref(node2);
         node2->next.Ref(node1);
         std::cout << "Node1 use_count: " << node1.ref_count() << "\n\n";
