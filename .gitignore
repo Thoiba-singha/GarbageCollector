@@ -1,0 +1,56 @@
+
+
+
+.vs/
+*.VC.db
+*.VC.VC.opendb
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sdf
+*.cache
+*.ipch
+
+# Visual Studio project files (CMake auto-generates these)
+*.vcxproj
+*.vcxproj.user
+*.filters
+
+# Build caches
+*.tlog
+
+# Visual Studio generated CMake files
+.vs/
+.vs
+out/
+build/
+build*/
+x64/
+x86/
+
+# Ninja build system (if used)
+.ninja_log
+.ninja_deps
+*.ninja
+
+# Exported compile commands
+compile_commands.json
+
+############################
+# Compiled binaries
+############################
+
+# Executables & libs
+*.exe
+*.dll
+*.lib
+*.pdb
+*.ilk
+*.exp
+*.obj
+*.o
+*.so
+*.a
+
