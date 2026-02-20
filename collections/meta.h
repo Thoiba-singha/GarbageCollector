@@ -1,9 +1,9 @@
-﻿// gc.h : Include file for standard system include files,
+﻿// meta.h : Include file for standard system include files,
 #pragma once 
 
 #ifdef __cplusplus
-#include "../gc/cpp/Ptr.hpp"
-#include "../gc/cpp/VSharedPtr.hpp"
+#include "cpp/Ptr.hpp"
+#include "cpp/VSharedPtr.hpp"
 
 extern "C" {
 #endif

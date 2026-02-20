@@ -1,11 +1,11 @@
-﻿# 🗑️ Realtime C/C++ Garbage Collector
+﻿# 🗑️ Realtime C/C++ Garbage Collector + Thread-Safe Smart pointer
 
 A lightweight, thread safe C/C++ garbage collector (GC)**.  
 
 The GC is designed to be:  
 - **Automatic** → cleanup followed by RAII principles and Global cleanup. 
-- **Safe** → with inbuit cyclic ref safe without weak_ptr.  
-- **Thread safe**.  
+- **weak function** → with inbuit cyclic ref safe without weak_ptr.  
+- **Thread safe VSharedPtr<T>** → with inbuit ThreadMode::True.
 
 ---
 
@@ -20,16 +20,17 @@ The GC is designed to be:
 - **Allocation APIs in C++**  
 - `GC::Ptr<T> || GC::Ptr<T[]>` → A Global `Ptr class` for GC.  
 - `GC::New<T> || GC::New<T[]>` → Factory function(). 
-- `GC::VSharedPtr<T> || GC::VSharedPtr<T[]>` → similar to std::shared_ptr<> with build in cycle detection.
-- `GC::VMakeShared<T> || GC::VMakeShared<T[]>` → similar to std::make_shared<>.
+- `ptr::VSharedPtr<T> || ptr::VSharedPtr<T[]>` → similar to std::shared_ptr<> with build in cycle detection and Extra ThreadMode.
+- `ptr::VMakeShared<T> || ptr::VMakeShared<T[]>` → Factory function.
 - `ref_count` → to count the current ref.
-- `Ref` → Cyclic ref safe(No need weak_ptr).
+- `weak` → Cyclic ref safe(No need weak_ptr).
 
 ---
 
 **C - Example usage:**
+
 ```c
-#include "gc/gc.h"
+#include "collections/meta.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -72,16 +73,16 @@ int main() {
 
 ```
 
-**C++ - Example usage:**
+**C++ VSharedPtr<T> - Example usage:**
 ```c
 
 
-#include "gc/gc.h"
+#include "collections/meta.h"
 #include <iostream>
 
 struct Node {
     int data;
-    GC::VSharedPtr<Node> next;
+    ptr::VSharedPtr<Node> next;
 
     explicit Node(int d) : data(d) {
         std::cout << "Node(" << data << ") created\n";
@@ -95,10 +96,10 @@ struct Node {
 int main() {
     //  Basic cyclic dependency test
     {
-        GC::VSharedPtr<Node> node1(new Node(40));
-        GC::VSharedPtr<Node> node2(new Node(50));
-        node1->next.Ref(node2);
-        node2->next.Ref(node1);
+        ptr::VSharedPtr<Node> node1(new Node(40));
+        ptr::VSharedPtr<Node> node2(new Node(50));
+        node1->next.weak(node2);
+        node2->next.weak(node1);
         std::cout << "Node1 use_count: " << node1.ref_count() << "\n\n";
         std::cout << "Node2 use_count: " << node2.ref_count() << "\n\n";
 
@@ -107,11 +108,18 @@ int main() {
 }
 
 
+```
+**C++ VSharedPtr<T> Thread Safe - Example usage:**
+
+```c
+  
+   ptr::VSharedPtr<Node, ptr::meta::ThreadMode::True> a(new Node); // Completly Threadsafe both ref and object level
+   ptr::VSharedPtr<Node, ptr::meta::ThreadMode::False> b(new Node);
 
 ```
-
 **Importants**
 
-- `realloc()` → not supported , the C APIs are fully writtern in C++ RAII principles.  
+- `realloc()` → not supported , the C APIs are fully writtern in C++ RAII principles. 
+- `ThreadMode` → only Available for VSharedPtr.
 - `Warning!` → Do not mixed these APIs. 
 - `Optimization` → not mature yet.
