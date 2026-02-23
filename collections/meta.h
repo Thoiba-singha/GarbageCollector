@@ -2,7 +2,7 @@
 #pragma once 
 
 #ifdef __cplusplus
-#include "cpp/Ptr.hpp"
+#include "cpp/gc.h"
 #include "cpp/VSharedPtr.hpp"
 
 extern "C" {

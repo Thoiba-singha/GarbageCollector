@@ -121,5 +121,5 @@ int main() {
 
 - `realloc()` → not supported , the C APIs are fully writtern in C++ RAII principles. 
 - `ThreadMode` → only Available for VSharedPtr.
-- `Warning!` → Do not mixed these APIs. 
+- `Warning!` → Do not mixed these APIs GC::Ptr<> With ptr::VSharedPtr<>. 
 - `Optimization` → not mature yet.
